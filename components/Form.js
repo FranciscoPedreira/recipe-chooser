@@ -1,36 +1,41 @@
-import { useState } from 'react';
-
-function handleSubmit(event) {
-    alert("A food was submitted: " + food);
-    event.preventDefault();
-}
+import {useState} from 'react';
 
 const Form = () => {
 
-    const [food, setFood] = useState("");
+  const [food, setFood] = useState("");
 
-    return (
-        <div>
-            <form onSubmit={handleSubmit}>
+  function handleSubmit(event) {
+    event.preventDefault();
+    alert("A food was submitted: " + food);
+    setFood('');
+  }
 
-                <label>
-                    <input type="text" placeholder="Type a food..." value={food}
-                        />
-                </label>
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
 
-                <input type="submit" value="Add" className="input"/>
+        <label>
+          <input
+            type="text"
+            placeholder="Type a food..."
+            value={food}
+            onChange={event => setFood(event.target.value)}
+          />
+        </label>
 
-            </form>
+        <input type="submit" value="Add" className="input"/>
 
-            <style jsx>{`
+      </form>
+
+      <style jsx>{`
             .input {
                 margin-left: 1em;
             }
             `}</style>
-        </div>
+    </div>
 
 
-    );
+  );
 
 };
 
