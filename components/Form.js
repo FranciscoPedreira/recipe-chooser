@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-function handleSubmit(event) {
+function handleSubmit(event, food, setFoodFunc) {
     alert("A food was submitted: " + food);
+    setFoodFunc(food);
     event.preventDefault();
 }
 
@@ -9,12 +10,15 @@ const Form = () => {
 
     const [food, setFood] = useState("");
 
+
+    const setFoodAux = setFood;
+
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(food, setFoodAux)}>
 
                 <label>
-                    <input type="text" placeholder="Type a food..." value={food}
+                    <input type="text" placeholder="Type a food..."
                         />
                 </label>
 
