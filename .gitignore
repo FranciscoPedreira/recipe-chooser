@@ -31,3 +31,7 @@ yarn-error.log*
 
 # webstorm
 /.idea
+.now
+
+# env file
+.env
