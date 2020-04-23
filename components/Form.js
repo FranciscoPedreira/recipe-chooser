@@ -1,40 +1,60 @@
-import { useState } from 'react';
+import {useState} from 'react';
+import Select from 'react-select';
 
-function handleSubmit(event, food, setFoodFunc) {
-    alert("A food was submitted: " + food);
-    setFoodFunc(food);
-    event.preventDefault();
-}
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];
 
 const Form = () => {
 
-    const [food, setFood] = useState("");
+  const [food, setFood] = useState("");
+  const [selectedOption, setSelectedOption] = useState('');
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    alert("A food was submitted: " + food);
+    setFood('');
+  }
 
-    const setFoodAux = setFood;
+  function handleChange (selectedOption) {
+    setSelectedOption(selectedOption);
+    console.log(`Option selected:`, selectedOption);
+  }
 
-    return (
-        <div>
-            <form onSubmit={handleSubmit(food, setFoodAux)}>
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
 
-                <label>
-                    <input type="text" placeholder="Type a food..."
-                        />
-                </label>
+        <label>
+          <input
+            type="text"
+            placeholder="Type a food..."
+            value={food}
+            onChange={event => setFood(event.target.value)}
+          />
+        </label>
 
-                <input type="submit" value="Add" className="input"/>
+        <input type="submit" value="Add" className="input"/>
 
-            </form>
+      </form>
 
-            <style jsx>{`
+      <Select
+          value={selectedOption}
+          onChange={handleChange}
+          options={options}
+      />
+
+      <style jsx>{`
             .input {
                 margin-left: 1em;
             }
             `}</style>
-        </div>
+    </div>
 
 
-    );
+  );
 
 };
 
