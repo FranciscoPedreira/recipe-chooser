@@ -3,11 +3,9 @@ import AsyncSelect from 'react-select/async';
 import fetch from 'isomorphic-unfetch';
 
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+/*const options = [
+  { value: 'chocolate', label: 'Chocolate' }
+];*/
 
 const Form = () => {
 
@@ -16,9 +14,7 @@ const Form = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    alert("A food was submitted: " + food);
-    setFood('');
-    getIngredients();
+    
   }
 
   function handleChange (selectedOption) {
@@ -26,13 +22,13 @@ const Form = () => {
     console.log(`Option selected:`, selectedOption);
   }
 
-  async function getIngredients(){
-
-    const res = await fetch('https://api.spoonacular.com/recipes/716429/information?apiKey=' + process.env.SPOONACULAR_API_KEY + '&includeNutrition=true');
+  async function getIngredients(ingredient){
+    
+    const res = await fetch('https://api.spoonacular.com/food/ingredients/search?apiKey=' + process.env.SPOONACULAR_API_KEY + '&query=' + ingredient + '&number=20');
     const ingredientList = await res.json();
 
     const options = [];
-    ingredientList.extendedIngredients.forEach((i) => {
+    ingredientList.results.forEach((i) => {
 
       options.push({value: i.name, label: i.name.toUpperCase()});
 
@@ -46,7 +42,6 @@ const Form = () => {
     <div>
       <form onSubmit={handleSubmit}>
 
-
         <div>
 
           <div id="select">
@@ -57,16 +52,12 @@ const Form = () => {
                 defaultOptions
             />
           </div>
-          
 
           <input type="submit" value="Add" id="search"/>
 
         </div>
-        
 
-
-        </form>
-
+      </form>
 
       <style jsx>{`
 
@@ -81,6 +72,7 @@ const Form = () => {
               }
                 
             `}
+
       </style>
 
     </div>
